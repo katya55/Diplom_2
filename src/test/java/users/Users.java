@@ -1,15 +1,19 @@
 package users;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.datafaker.Faker;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users {
-    String email;
-    String password;
-    String name;
+    private String email;
+    private String password;
+    private String name;
 
     private static final Faker faker = new Faker();
 

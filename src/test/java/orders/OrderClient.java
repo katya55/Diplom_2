@@ -2,6 +2,9 @@ package orders;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.net.HttpURLConnection;
 import java.util.List;
@@ -59,8 +62,10 @@ public class OrderClient {
                 .body(Map.of("ingredients", ingredients))
                 .when()
                 .post("orders")
-                .then().log().all();
+                .then().log().all()
+                .header("Location", equalTo("/login"));
     }
+
 
     @Step("Ошибка при создании заказа без авторизации")
     public void checkErrorOrderWithoutAuth(ValidatableResponse createResponse) {
@@ -108,7 +113,7 @@ public class OrderClient {
         return spec()
                 .baseUri(BASE_URL)
                 .get("orders")
-                .then().statusCode(200);
+                .then().statusCode(401);
     }
 
     @Step("Ошибка при получении заказа пользователя без авторизации")

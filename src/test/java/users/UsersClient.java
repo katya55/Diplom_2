@@ -2,15 +2,16 @@ package users;
 
 import conf.Client;
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-import org.junit.jupiter.api.Test;
 
 import java.net.HttpURLConnection;
 
 import static conf.Envconf.BASE_URL;
 import static org.hamcrest.Matchers.equalTo;
 
+import users.Users;
+import users.Creds;
+import users.UpdateUser;
 
 public class UsersClient extends Client {
 
@@ -69,7 +70,7 @@ public class UsersClient extends Client {
         createResponse.assertThat()
                 .statusCode(HttpURLConnection.HTTP_FORBIDDEN)
                 .body("success", equalTo(false))
-                .body("message", equalTo("User already exists"));
+                .body("message", equalTo("Email, password and name are required fields"));
     }
 
     @Step("Ошибка при логине с невалидным email/password")
@@ -138,7 +139,7 @@ public class UsersClient extends Client {
         spec()
                 .header("Authorization", accessToken)
                 .when()
-                .delete("/api/auth/user")
+                .delete("auth/user")
                 .then()
                 .log().all()
                 .statusCode(HttpURLConnection.HTTP_ACCEPTED);

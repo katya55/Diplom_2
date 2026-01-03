@@ -1,12 +1,17 @@
 package users;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.datafaker.Faker;
 
-@Value
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Creds {
-    String email;
-    String password;
+    private String email;
+    private String password;
 
     private static final Faker faker = new Faker();
 
@@ -15,7 +20,7 @@ public class Creds {
     }
 
     public static Creds withoutPassword() {
-        return new Creds( faker.internet().emailAddress(),
+        return new Creds(faker.internet().emailAddress(),
                 null);
     }
 

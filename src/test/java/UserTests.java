@@ -50,7 +50,7 @@ public class UserTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        ValidatableResponse loginResponse2 = usersClient.loginCourier(creds);
+        ValidatableResponse loginResponse2 = usersClient.createUser(user);
         usersClient.checkErrorCreateDuplicateUser(loginResponse2);
     }
 
