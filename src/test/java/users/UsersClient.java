@@ -9,9 +9,6 @@ import java.net.HttpURLConnection;
 import static conf.Envconf.BASE_URL;
 import static org.hamcrest.Matchers.equalTo;
 
-import users.Users;
-import users.Creds;
-import users.UpdateUser;
 
 public class UsersClient extends Client {
 

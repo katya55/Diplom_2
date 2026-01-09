@@ -2,9 +2,6 @@ package orders;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.net.HttpURLConnection;
 import java.util.List;

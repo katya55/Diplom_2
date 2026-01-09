@@ -20,6 +20,7 @@ public class UserTests {
     public void dropUser() {
         if (accessToken != null) {
             usersClient.deleteUser(accessToken);
+            System.out.println("Клиент удален");
         }
     }
 
@@ -33,7 +34,7 @@ public class UserTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         assertNotNull(accessToken);
         assertFalse(accessToken.isEmpty());
@@ -50,6 +51,7 @@ public class UserTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
+        accessToken = usersClient.checkLogin(loginResponse, user);
         ValidatableResponse loginResponse2 = usersClient.createUser(user);
         usersClient.checkErrorCreateDuplicateUser(loginResponse2);
     }
@@ -81,7 +83,6 @@ public class UserTests {
     @Test
     @DisplayName("Изменение данных с авторизацией")
     public void changeDataWithAuth() {
-
         Users user = Users.randomUser();
         ValidatableResponse createResponse = usersClient.createUser(user);
         usersClient.checkCreated(createResponse, user);

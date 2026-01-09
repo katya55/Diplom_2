@@ -15,8 +15,15 @@ public class OrderTests {
     UsersClient usersClient = new UsersClient();
     OrderClient orderClient = new OrderClient();
     Order order = new Order();
+    private String accessToken;
 
-    @AfterEach //удалить заказы
+    @AfterEach
+    public void dropUser() {
+        if (accessToken != null) {
+            usersClient.deleteUser(accessToken);
+            System.out.println("Клиент удален");
+        }
+    }
 
     @Test
     @DisplayName("Создание заказа с авторизацией с ингридиентами")
@@ -27,7 +34,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
@@ -46,7 +53,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
@@ -65,7 +72,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
@@ -83,7 +90,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
@@ -101,7 +108,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
@@ -125,7 +132,7 @@ public class OrderTests {
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
-        String accessToken = usersClient.checkLogin(loginResponse, user);
+        accessToken = usersClient.checkLogin(loginResponse, user);
 
         //создание заказа
         List<String> listOfIngredients = orderClient.getIngredients(accessToken);
