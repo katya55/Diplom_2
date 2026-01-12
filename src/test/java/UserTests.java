@@ -1,6 +1,7 @@
 
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import users.Creds;
@@ -15,6 +16,16 @@ public class UserTests {
 
     UsersClient usersClient = new UsersClient();
     private String accessToken;
+    Users user;
+
+
+    @BeforeEach
+    public void setUp() {
+        user = Users.randomUser();
+        ValidatableResponse createResponse = usersClient.createUser(user);
+        usersClient.checkCreated(createResponse, user);
+
+    }
 
     @AfterEach
     public void dropUser() {
@@ -28,14 +39,10 @@ public class UserTests {
     @Test
     @DisplayName("Успешное создание клиента")
     public void createUniqueUser() {
-        Users user = Users.randomUser();
-        ValidatableResponse createResponse = usersClient.createUser(user);
-        usersClient.checkCreated(createResponse, user);
         //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
         accessToken = usersClient.checkLogin(loginResponse, user);
-
         assertNotNull(accessToken);
         assertFalse(accessToken.isEmpty());
 
@@ -44,11 +51,6 @@ public class UserTests {
     @Test
     @DisplayName("Создание пользователя, который уже зарегистрирован")
     public void createDuplicateUser() {
-        Users user = Users.randomUser();
-        ValidatableResponse createResponse = usersClient.createUser(user);
-        usersClient.checkCreated(createResponse, user);
-
-        //получение логина/пароля
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
         accessToken = usersClient.checkLogin(loginResponse, user);
@@ -83,9 +85,6 @@ public class UserTests {
     @Test
     @DisplayName("Изменение данных с авторизацией")
     public void changeDataWithAuth() {
-        Users user = Users.randomUser();
-        ValidatableResponse createResponse = usersClient.createUser(user);
-        usersClient.checkCreated(createResponse, user);
 
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
@@ -99,10 +98,6 @@ public class UserTests {
     @Test
     @DisplayName("Изменение данных без авторизации")
     public void changeDataWithoutAuth() {
-        Users user = Users.randomUser();
-        ValidatableResponse createResponse = usersClient.createUser(user);
-        usersClient.checkCreated(createResponse, user);
-
         var creds = Creds.getCreds(user);
         ValidatableResponse loginResponse = usersClient.loginCourier(creds);
         accessToken = usersClient.checkLogin(loginResponse, user);
@@ -112,7 +107,6 @@ public class UserTests {
         usersClient.checkUpdateWithoutAuthError(createResponse2);
 
     }
-
 }
 
 
